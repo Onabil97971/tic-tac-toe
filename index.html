@@ -7,6 +7,7 @@
       <link rel="stylesheet" href="/css/style.css" />
       <link rel="stylesheet" href="/css/overlays.css" />
       <link rel="stylesheet" href="css/config.css" />
+      <link rel="stylesheet" href="/css/game.css" />
       <title>Tic Tac Toe</title>
     </head>
     <body>
@@ -19,7 +20,7 @@
         <aside class="modal" id="config-overlay">
           <h2>Enter your name</h2>
           <form>
-            <div>
+            <div class="form-control">
               <label for="playername">Player name</label>
               <input type="text" name="playername" id="playername" />
             </div>
@@ -35,22 +36,22 @@
               <article>
                 <h2>Player 1</h2>
                 <h3>player name</h3>
-                <p>X</p>
+                <p class="player-symbol">X</p>
                 <button class="btn btn-alt">Edit</button>
               </article>
             </li>
             <li>
               <h2>Player 2</h2>
               <h3>player name</h3>
-              <p>O</p>
+              <p class="player-symbol">O</p>
               <button class="btn btn-alt">Edit</button>
             </li>
           </ol>
           <button class="btn">Start New Game</button>
         </section>
         <section id="active-game">
-          <article>
-            <h3>You won!</h3>
+          <article id="game-over">
+            <h2>You won <span id="winner-name">Player Name</span>!</h2>
             <p>Click "Start New Game" above, to start a new game</p>
           </article>
 
