@@ -10,5 +10,10 @@ function cancelPlayerConfig() {
 
 function savePlayerConfig(event) {
   event.preventDefault();
-  const formData = new FormData();
+  const formData = new FormData(event.target);
+  const enteredPlayerName = formData.get("playername").trim();
+
+  if (!enteredPlayerName) {
+    errorOutput.textContent = "Please Enter a Valid Name";
+  }
 }
