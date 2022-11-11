@@ -1,19 +1,18 @@
-function resetGameStatus() {
+function resetGame() {
   activePlayer = 0;
-  currentRound = 0;
-  gameOver = false;
+  currentRound = 1;
+  gameIsOver = false;
   gameOverElement.firstElementChild.innerHTML =
-    'You won, <span id="winner-game">Player Name</span>!';
+    'You won <span id="winner-name">Player Name</span>!';
   gameOverElement.style.display = "none";
 
   let gameBoardIndex = 0;
-
   for (let i = 0; i < 3; i++) {
-    for (let j = 0; i < 3; j++) {
+    for (let j = 0; j < 3; j++) {
       gameData[i][j] = 0;
-      const gameBoardItemElement = gameBoardElement.children[gameBoardIndex];
-      gameBoardItemElement.textContent = "";
-      gameBoardItemElement.classList.remove("disabled");
+      const gameBoardItem = gameBoardElement.children[gameBoardIndex];
+      gameBoardItem.textContent = "";
+      gameBoardItem.classList.remove("disabled");
       gameBoardIndex++;
     }
   }
@@ -25,7 +24,7 @@ function startNewGame() {
     return;
   }
 
-  resetGameStatus();
+  resetGame();
 
   activePlayerNameElement.textContent = players[activePlayer].name;
   gameAreaElement.style.display = "block";
@@ -42,7 +41,7 @@ function switchPlayer() {
 }
 
 function selectGameField(event) {
-  if (event.target.tagName != "LI" || gameOver) {
+  if (event.target.tagName != "LI" || gameIsOver === true) {
     return;
   }
 
@@ -114,7 +113,7 @@ function checkForGameOver() {
 }
 
 function endGame(winneriD) {
-  gameOver = true;
+  gameIsOver = true;
   gameOverElement.style.display = "block";
 
   if (winneriD > 0) {
