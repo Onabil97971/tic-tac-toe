@@ -1,8 +1,31 @@
+function resetGameStatus() {
+  activePlayer = 0;
+  currentRound = 0;
+  gameOver = false;
+  gameOverElement.firstElementChild.innerHTML =
+    'You won, <span id="winner-game">Player Name</span>!';
+  gameOverElement.style.display = "none";
+
+  let gameBoardIndex = 0;
+
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; i < 3; j++) {
+      gameData[i][j] = 0;
+      const gameBoardItemElement = gameBoardElement.children[gameBoardIndex];
+      gameBoardItemElement.textContent = "";
+      gameBoardItemElement.classList.remove("disabled");
+      gameBoardIndex++;
+    }
+  }
+}
+
 function startNewGame() {
   if (players[0].name === "" || players[1].name === "") {
     alert("Please set a custom player names for both players");
     return;
   }
+
+  resetGameStatus();
 
   activePlayerNameElement.textContent = players[activePlayer].name;
   gameAreaElement.style.display = "block";
@@ -19,7 +42,7 @@ function switchPlayer() {
 }
 
 function selectGameField(event) {
-  if (event.target.tagName != "LI") {
+  if (event.target.tagName != "LI" || gameOver) {
     return;
   }
 
@@ -35,7 +58,13 @@ function selectGameField(event) {
   selectedField.classList.add("disabled");
 
   gameData[selectedRow][selectedColumn] = activePlayer + 1;
+  const winneriD = checkForGameOver();
 
+  if (winneriD !== 0) {
+    endGame(winneriD);
+  }
+
+  currentRound++;
   switchPlayer();
 }
 
@@ -78,5 +107,21 @@ function checkForGameOver() {
     return gameData[2][0];
   }
 
+  if (currentRound === 9) {
+    return -1;
+  }
   return 0;
+}
+
+function endGame(winneriD) {
+  gameOver = true;
+  gameOverElement.style.display = "block";
+
+  if (winneriD > 0) {
+    const winnerName = players[winneriD - 1].name;
+    gameOverElement.firstElementChild.firstElementChild.textContent =
+      winnerName;
+  } else {
+    gameOverElement.firstElementChild.textContent = "it's a draw";
+  }
 }
